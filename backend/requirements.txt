@@ -1,0 +1,12 @@
+flask
+flask-cors
+pymongo
+python-dotenv
+langchain
+langchain-groq
+langchain-community
+beautifulsoup4
+sentence-transformers
+faiss-cpu
+requests
+gunicorn
