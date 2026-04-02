@@ -4,6 +4,7 @@ pymongo
 python-dotenv
 langchain
 langchain-groq
+langchain-google-genai
 langchain-community
 beautifulsoup4
 requests

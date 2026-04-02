@@ -1,13 +1,13 @@
 import os
-from langchain_groq import ChatGroq, GroqEmbeddings # Added GroqEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
+from langchain_groq import ChatGroq
 
-# 1. Initialize Groq Embeddings (Uses your existing GROQ_API_KEY)
-embeddings = GroqEmbeddings(
-    model_name="llama-3.1-8b-instant", # Or "nomic-embed-text-v1.5" if available on your Groq plan
-    groq_api_key=os.getenv("GROQ_API_KEY")
+embeddings = GoogleGenerativeAIEmbeddings(
+    model="models/text-embedding-004", 
+    google_api_key=os.getenv("GOOGLE_API_KEY")
 )
 
 
