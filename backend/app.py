@@ -87,23 +87,19 @@ def get_from_cloud(email):
     logs = list(history_collection.find({"user_email": email}, {"_id": 0}).sort("date", -1))
     return jsonify(logs), 200
 
-@app.route('/api/delete-history', methods=['DELETE', 'OPTIONS'])
+@app.route('/api/delete-history', methods=['DELETE'])
 def delete_from_cloud():
-    if request.method == 'OPTIONS':
-        return jsonify({"status": "ok"}), 200
+    user_email = request.args.get('email') # Get from URL instead of Body
+    sid = request.args.get('id')
+    
+    if not user_email or not sid:
+        return jsonify({"status": "error", "message": "Missing email or id"}), 400
 
-    try:
-        data = request.get_json()
-        user_email = data.get('email')
-        sid = data.get('id')
-        
-        history_collection.delete_one({
-            "user_email": user_email,
-            "session_id": str(sid)
-        })
-        return jsonify({"status": "success"}), 200
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+    history_collection.delete_one({
+        "user_email": user_email,
+        "session_id": str(sid)
+    })
+    return jsonify({"status": "success"}), 200
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))

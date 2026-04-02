@@ -119,16 +119,13 @@ function App() {
 
     try {
       // ✅ Updated: Relative path for Render
-      const response = await fetch("/api/delete-history", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
+      // Data is now passed as query parameters after the '?'
+      const response = await fetch(
+        `/api/delete-history?email=${user.email}&id=${idToDelete}`,
+        {
+          method: "DELETE",
         },
-        body: JSON.stringify({
-          email: user.email,
-          id: String(idToDelete),
-        }),
-      });
+      );
 
       const result = await response.json();
 
@@ -185,11 +182,10 @@ function App() {
                 onSuccess={handleLoginSuccess}
                 onError={() => console.log("Login Failed")}
                 useOneTap={false}
-                theme="outline"
-                shape="rectangular"
+                theme="filled_blue" // Optional: Changing theme also helps reset the look
+                shape="pill" // Optional: Modern rounded look
                 width="100%"
-                text="continue_with"
-                locale="en"
+                text="signin_with" // 👈 This forces the generic "Sign in with Google" text
               />
             </div>
 
