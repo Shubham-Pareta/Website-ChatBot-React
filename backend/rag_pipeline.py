@@ -1,15 +1,15 @@
 import os
+from langchain_groq import ChatGroq, GroqEmbeddings # Added GroqEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_groq import ChatGroq
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_core.documents import Document 
+from langchain_core.documents import Document
 
-# 1. Initialize Embeddings
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2",
-    model_kwargs={'device': 'cpu'}
+# 1. Initialize Groq Embeddings (Uses your existing GROQ_API_KEY)
+embeddings = GroqEmbeddings(
+    model_name="llama-3.1-8b-instant", # Or "nomic-embed-text-v1.5" if available on your Groq plan
+    groq_api_key=os.getenv("GROQ_API_KEY")
 )
+
 
 def process_website(texts, metadatas=None):
     """Chunks website content and builds the FAISS index."""
